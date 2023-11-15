@@ -1,0 +1,7 @@
+{
+  "name": "osfc_employee_app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
