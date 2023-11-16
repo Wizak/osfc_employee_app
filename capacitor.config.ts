@@ -2,10 +2,10 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'osfc_employee_app',
+  appName: 'OSFC Employee APP (DEMO)',
   webDir: 'dist',
   server: {
-    androidScheme: 'https'
+    androidScheme: 'http'
   }
 };
 

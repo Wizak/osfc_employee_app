@@ -1,5 +1,26 @@
 import React from "react";
 
+class HttpError extends Error {
+    constructor(
+        public readonly message,
+        public readonly status,
+        public readonly body = null
+    ) {
+        super(message);
+        Object.setPrototypeOf(this, HttpError.prototype);
+        this.name = this.constructor.name;
+        if (typeof Error.captureStackTrace === 'function') {
+            Error.captureStackTrace(this, this.constructor);
+        } else {
+            this.stack = new Error(message).stack;
+        }
+        this.stack = new Error().stack;
+    }
+}
+
+export default HttpError;
+
+
 export interface Options extends RequestInit {
     user?: {
         authenticated?: boolean;
@@ -45,7 +66,16 @@ export const fetchJson = (url, options: Options = {}) => {
             } catch (e) {
                 // not json, no big deal
             }
-            return { status, headers, body, json };
+            if (status < 200 || status >= 300) {
+                return Promise.reject(
+                    new HttpError(
+                        (json && json.message) || statusText,
+                        status,
+                        json
+                    )
+                );
+            }
+            return Promise.resolve({ status, headers, body, json });
         });
 };
 
@@ -64,4 +94,4 @@ export const httpClient = (url, options = {}) => {
 	return fetchJson(API_URL+url, _options);
 }
 
-const API_URL = 'http://osfc-test.userlogin.eu:8000/'
+const API_URL = 'http://93.171.247.14/'

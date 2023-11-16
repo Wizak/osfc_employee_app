@@ -68,10 +68,6 @@ const GeolocationTracking: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    loadLocation();
-  }, []); 
-
 	return (
     <IonPage>
       <IonHeader>
@@ -114,9 +110,9 @@ const GeolocationTracking: React.FC = () => {
         <IonGrid>
         {/* Google Maps */}
         {location && (
-          <LoadScript googleMapsApiKey="YOUR_GOOGLE_MAPS_API_KEY">
+          <LoadScript googleMapsApiKey="">
             <GoogleMap
-              mapContainerStyle={{ height: '300px', width: '100%', margin: '20px auto' }}
+              mapContainerStyle={{ height: '50vh', width: '100%', margin: '20px auto' }}
               center={{ lat: location.coords.latitude, lng: location.coords.longitude }}
               zoom={15}
             >

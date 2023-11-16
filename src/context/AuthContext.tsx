@@ -5,15 +5,14 @@ import { httpClient } from './httpClient';
 
 
 interface Permissions {
-    username: string;
+    email: string;
     password: string;
 };
 
 
 interface AuthContextProps {
-  isAuthenticated: boolean;
-  getPermissions: (username: string, password: string) => Permissions;
-  login: (username: string, password: string) => void;
+  getPermissions: () => Permissions;
+  login: (email: string, password: string) => void;
   logout: () => void;
 };
 
@@ -21,32 +20,32 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<ReactNode> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  const login = (username: string, password: string) => {
-    httpClient("login", {
+  const login = (email: string, password: string) => {
+    return httpClient("login", {
         method: 'POST',
-        body: JSON.stringify({email: username, password: password}),
+        body: JSON.stringify({email: email, password: password}),
     }).then(res => {
-        localStorage.setItem("token", res.json.token);
-        localStorage.setItem("permissions", JSON.stringify(res.json.permissions));
-        setIsAuthenticated(true);
+      localStorage.setItem("token", res.json.token);
+      localStorage.setItem("permissions", JSON.stringify(res.json.permissions));
+      return {success: true, message: "OK"};
+    }).catch(res => {
+      return {success: false, message: res.message};
     });
   };
 
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("permissions");
-    setIsAuthenticated(false);
+    return true;
   };
 
   const getPermissions = () => {
     const rawPermissions = localStorage.getItem('permissions');
-	const permissions = JSON.parse(rawPermissions);
-	return permissions;
+    const permissions = JSON.parse(rawPermissions);
+    return permissions;
   };
 
-  return <AuthContext.Provider value={{ isAuthenticated, getPermissions, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ getPermissions, login, logout }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

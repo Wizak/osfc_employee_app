@@ -3,7 +3,7 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { map, square, images } from 'ionicons/icons';
+import { map, person, images } from 'ionicons/icons';
 import Geolocation from './pages/Geolocation';
 import Photos from './pages/Photos';
 import Profile from './pages/Profile';
@@ -39,38 +39,38 @@ const App: React.FC = () => (
       <IonReactRouter>
         <IonTabs>
           <IonRouterOutlet>
-            <Route path="/login" component={LoginPage} />
-            <PrivateRoute exact path="/tab1" component={Geolocation} />
-            <PrivateRoute exact path="/tab2" component={Photos} />
-            <PrivateRoute exact path="/tab3" component={Profile} />
-            <PrivateRoute exact path="/" component={RedirectPage} />
+              <Route exact path="/login" component={LoginPage} />
+              <PrivateRoute exact path="/" component={RedirectPage} />
+              <PrivateRoute exact path="/location" component={Geolocation} />
+              <PrivateRoute exact path="/gallery" component={Photos} />
+              <PrivateRoute exact path="/profile" component={Profile} />
           </IonRouterOutlet>
-          <IonTabBar slot="bottom">
-            <IonTabButton tab="tab1" href="/tab1">
-              <IonIcon aria-hidden="true" icon={map} />
-              <IonLabel>Geolocation</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab2" href="/tab2">
-              <IonIcon icon={images} />
-              <IonLabel>Photos</IonLabel>
-            </IonTabButton>
-            <IonTabButton tab="tab3" href="/tab3">
-              <IonIcon aria-hidden="true" icon={square} />
-              <IonLabel>Profile</IonLabel>
-            </IonTabButton>
-          </IonTabBar>
+            <IonTabBar slot="bottom">
+              <IonTabButton tab="tab1" href="/location">
+                <IonIcon icon={map} />
+                <IonLabel>Geolocation</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="tab2" href="/gallery">
+                <IonIcon icon={images} />
+                <IonLabel>Photos</IonLabel> 
+              </IonTabButton>
+              <IonTabButton tab="tab3" href="/profile">
+                <IonIcon icon={person} />
+                <IonLabel>Profile</IonLabel>
+              </IonTabButton>
+            </IonTabBar>
         </IonTabs>
       </IonReactRouter>
     </AuthProvider>
   </IonApp>
 );
 
-const RedirectPage: React.FC = () => <Redirect to="/tab1" />
+const RedirectPage: React.FC = () => <Redirect to="/profile" />
 
 const PrivateRoute: React.FC<{ path: string; component: React.ComponentType<any> }> = ({ path, component, ...props }) => {
-  const { isAuthenticated } = useAuth();
-
-  return isAuthenticated ? <Route path={path} component={component} {...props} /> : <Redirect to="/login" />;
+  const { getPermissions } = useAuth();
+  const permissions = getPermissions();
+  return permissions ? <Route path={path} component={component} {...props} /> : <Redirect to="/login" />;
 };
 
 export default App;
