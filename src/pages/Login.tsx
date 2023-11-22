@@ -1,54 +1,76 @@
-// src/pages/LoginPage.tsx
-
-import React, { useState, useEffect } from 'react';
-import { IonContent, IonPage, IonInput, IonButton, IonLabel, IonGrid, IonRow, IonCol, useIonToast } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
+import { useIonRouter, useIonLoading, IonIcon, IonCard, IonCardContent, IonContent, IonPage, IonInput, IonButton, IonLabel, IonGrid, IonRow, IonCol, useIonToast, IonItem } from '@ionic/react';
 import { useAuth } from '../context/AuthContext';
+import { logInOutline } from 'ionicons/icons';
+import OSFCLOGO from '../assets/osfc-logo.jpg';
+import { useForm } from "react-hook-form";
 
 const LoginPage: React.FC = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const history = useHistory();
-  const [present] = useIonToast();
+  const router = useIonRouter();
+  const [present, dismiss] = useIonLoading();
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
-  const handleLogin = React.useCallback(async () => {
-    if (email.trim() === '' || password.trim() === '') {
-      present({
-        message: "Password or email is Empty",
-        duration: 500,
-        position: 'middle',
-      });
-      return;
-    }
+  const registerOptions = {
+    email: { 
+      required: "Email is required",
+      pattern: {
+        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+        message: "invalid email address"
+      }
+    },
+    password: { required: "Password is required" },
+  };
 
-    login(email, password).then(res => {
+  const onSubmit = (data) => {
+    login(data.email, data.password).then(res => {
       if (res.success) {
-        history.push('/');
+        present('Logging in...');
+        setTimeout(async () => {
+          dismiss();
+          router.push('/app', 'root');
+        }, 2000);
       } else {
-        present({
-          message: res.message,
-          duration: 500,
-          position: 'middle',
-        });
+        present(res.message);
+        setTimeout(async () => {
+          dismiss();
+        }, 750);
       };
     });
-  }, [ email, password, present, history ]);
+  };
 
   return (
     <IonPage>
-      <IonContent>
-        <IonGrid>
-          <IonRow className="ion-justify-content-center ion-align-items-center" style={{ height: '100%' }}>
-            <IonCol size="12" sizeMd="6" className="ion-text-center">
-              <h1>Login</h1>
-              <IonLabel position="stacked">Username</IonLabel>
-              <IonInput autocomplete="off" type="text" value={email} onIonChange={(e) => setEmail(e.detail.value!)} />
-              <IonLabel position="stacked">Password</IonLabel>
-              <IonInput autocomplete="off" type="password" value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
-              <IonButton expand="full" onClick={handleLogin}>
-                Log In
-              </IonButton>
+      <IonContent scrollY={false} className="ion-padding">
+        <IonGrid fixed>
+          <IonRow class="ion-justify-content-center">
+            <IonCol size="12" sizeMd="8" sizeLg="6" sizeXl="4">
+              <div className="ion-text-center ion-padding">
+                <img src={OSFCLOGO} alt="FCC Logo" width={'50%'} />
+              </div>
+            </IonCol>
+          </IonRow>
+
+          <IonRow class="ion-justify-content-center">
+            <IonCol size="12" sizeMd="8" sizeLg="6" sizeXl="4">
+              <IonCard>
+                <IonCardContent>
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <IonInput {...register('email', registerOptions.email)} autocomplete='off' name="email" mode="md" fill="outline" labelPlacement="floating" label="Email" type="email" />
+                    <small className="text-danger">
+                      {errors?.email && errors.email.message}
+                    </small>
+                    <IonInput {...register('password', registerOptions.password)} autocomplete='off' name="password" mode="md" className="ion-margin-top" fill="outline" labelPlacement="floating" label="Password" type="password" />
+                    <small className="text-danger">
+                      {errors?.password && errors.password.message}
+                    </small>
+                    <IonButton expand="block" className="ion-margin-top" type="submit">
+                      Login
+                      <IonIcon icon={logInOutline} slot="end" />
+                    </IonButton>
+                  </form>
+                </IonCardContent>
+              </IonCard>
             </IonCol>
           </IonRow>
         </IonGrid>

@@ -13,7 +13,6 @@ const Profile: React.FC = () => {
 
   const handleLogOut = () => {
     logout();
-    window.location.reload();
   };
 
   return (
@@ -36,7 +35,7 @@ const Profile: React.FC = () => {
           </IonRow>
         </IonGrid>
         <IonFab vertical="bottom" horizontal="center" slot="fixed">
-					<IonFabButton onClick={handleLogOut}>
+					<IonFabButton onClick={handleLogOut} routerLink="/" routerDirection="root">
 						<IonIcon icon={logOut}></IonIcon>
 					</IonFabButton>
 				</IonFab>

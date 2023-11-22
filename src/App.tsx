@@ -3,11 +3,9 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { map, person, images } from 'ionicons/icons';
-import Geolocation from './pages/Geolocation';
-import Photos from './pages/Photos';
-import Profile from './pages/Profile';
+
 import LoginPage from './pages/Login'; // Assuming you have a LoginPage component
+import Main from './pages/main';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 /* Core CSS required for Ionic components to work properly */
@@ -37,40 +35,19 @@ const App: React.FC = () => (
   <IonApp>
     <AuthProvider>
       <IonReactRouter>
-        <IonTabs>
           <IonRouterOutlet>
-              <Route exact path="/login" component={LoginPage} />
-              <PrivateRoute exact path="/" component={RedirectPage} />
-              <PrivateRoute exact path="/location" component={Geolocation} />
-              <PrivateRoute exact path="/gallery" component={Photos} />
-              <PrivateRoute exact path="/profile" component={Profile} />
+              <Route exact path="/" component={LoginPage} />
+              <PrivateRoute path="/app" component={Main} />
           </IonRouterOutlet>
-            <IonTabBar slot="bottom">
-              <IonTabButton tab="tab1" href="/location">
-                <IonIcon icon={map} />
-                <IonLabel>Geolocation</IonLabel>
-              </IonTabButton>
-              <IonTabButton tab="tab2" href="/gallery">
-                <IonIcon icon={images} />
-                <IonLabel>Photos</IonLabel> 
-              </IonTabButton>
-              <IonTabButton tab="tab3" href="/profile">
-                <IonIcon icon={person} />
-                <IonLabel>Profile</IonLabel>
-              </IonTabButton>
-            </IonTabBar>
-        </IonTabs>
       </IonReactRouter>
     </AuthProvider>
   </IonApp>
 );
 
-const RedirectPage: React.FC = () => <Redirect to="/profile" />
-
 const PrivateRoute: React.FC<{ path: string; component: React.ComponentType<any> }> = ({ path, component, ...props }) => {
   const { getPermissions } = useAuth();
   const permissions = getPermissions();
-  return permissions ? <Route path={path} component={component} {...props} /> : <Redirect to="/login" />;
+  return permissions ? <Route path={path} component={component} {...props} /> : <Redirect to="/" />;
 };
 
 export default App;
