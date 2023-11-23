@@ -1,4 +1,5 @@
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonPage, IonRouterOutlet } from '@ionic/react';
+import { IonReactRouter } from '@ionic/react-router';
 import React from 'react';
 import { Route, Redirect } from 'react-router';
 
@@ -8,9 +9,9 @@ import Photos from './Photos';
 import Profile from './Profile';
 
 
-const Main: React.FC = () => {
+const Menu: React.FC = () => {
   return (
-    <IonPage>
+    <IonReactRouter>
         <IonTabs>
             <IonRouterOutlet id="main">
                 <Route path="/app/location" component={Geolocation} />
@@ -35,8 +36,8 @@ const Main: React.FC = () => {
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>
-    </IonPage>
+    </IonReactRouter>
   );
 };
 
-export default Main;
+export default Menu;

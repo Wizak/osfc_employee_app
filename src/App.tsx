@@ -5,7 +5,7 @@ import { IonApp, IonIcon, IonLabel, IonRouterOutlet, IonTabBar, IonTabButton, Io
 import { IonReactRouter } from '@ionic/react-router';
 
 import LoginPage from './pages/Login'; // Assuming you have a LoginPage component
-import Main from './pages/main';
+import Menu from './pages/Menu';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 /* Core CSS required for Ionic components to work properly */
@@ -37,7 +37,7 @@ const App: React.FC = () => (
       <IonReactRouter>
           <IonRouterOutlet>
               <Route exact path="/" component={LoginPage} />
-              <PrivateRoute path="/app" component={Main} />
+              <PrivateRoute path="/app" component={Menu} />
           </IonRouterOutlet>
       </IonReactRouter>
     </AuthProvider>

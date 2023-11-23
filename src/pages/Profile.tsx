@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IonRow, IonGrid, IonLabel, IonFab, IonFabButton, IonIcon, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useIonLoading, useIonRouter, IonRow, IonGrid, IonLabel, IonFab, IonFabButton, IonIcon, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { logOut } from 'ionicons/icons';
 
 import { useAuth } from '../context/AuthContext';
@@ -9,10 +9,18 @@ import './Profile.css';
 
 const Profile: React.FC = () => {
   const { logout, getPermissions } = useAuth();
+  const router = useIonRouter();
+  const [present, dismiss] = useIonLoading();
   const permissions = getPermissions();
 
   const handleLogOut = () => {
-    logout();
+    present('Logout...');
+    setTimeout(async () => {
+      dismiss();
+      logout();
+      window.location.reload();
+      router.push('/', 'root');
+    }, 2000);
   };
 
   return (
