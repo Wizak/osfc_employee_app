@@ -36,7 +36,8 @@ const App: React.FC = () => (
     <AuthProvider>
       <IonReactRouter>
           <IonRouterOutlet>
-              <Route exact path="/" component={LoginPage} />
+              <Route exact path="/login" component={LoginPage} />
+              <Route exact path="/" render={() => <Redirect to="/app" />}/>
               <PrivateRoute path="/app" component={Menu} />
           </IonRouterOutlet>
       </IonReactRouter>
@@ -44,10 +45,10 @@ const App: React.FC = () => (
   </IonApp>
 );
 
-const PrivateRoute: React.FC<{ path: string; component: React.ComponentType<any> }> = ({ path, component, ...props }) => {
+const PrivateRoute: React.FC<{ path: string; component: React.ComponentType<any> }> = (props) => {
   const { getPermissions } = useAuth();
   const permissions = getPermissions();
-  return permissions ? <Route path={path} component={component} {...props} /> : <Redirect to="/" />;
+  return permissions ? <Route {...props} /> : <Redirect to="/login" />;
 };
 
 export default App;

@@ -1,0 +1,18 @@
+.barcode-scanner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.barcode-list {
+    overflow-y: scroll;
+    height: 70vh;
+}
+
+.list-header {
+    background-color: #333;
+}
+
+.list-item {
+    border-bottom: 1px solid #ccc;
+}

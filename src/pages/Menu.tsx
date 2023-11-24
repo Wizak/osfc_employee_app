@@ -4,6 +4,7 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 
 import { map, person, images } from 'ionicons/icons';
+import Barcode from './Barcode';
 import Geolocation from './Geolocation';
 import Photos from './Photos';
 import Profile from './Profile';
@@ -14,6 +15,7 @@ const Menu: React.FC = () => {
     <IonReactRouter>
         <IonTabs>
             <IonRouterOutlet id="main">
+                <Route path="/app/barcode" component={Barcode} />
                 <Route path="/app/location" component={Geolocation} />
                 <Route path="/app/gallery" component={Photos} />
                 <Route path="/app/profile" component={Profile} />
@@ -22,17 +24,21 @@ const Menu: React.FC = () => {
                 </Route>
             </IonRouterOutlet>
             <IonTabBar slot="bottom">
+                <IonTabButton tab="barcode" href="/app/barcode">
+                    <IonIcon icon={map} />
+                    <IonLabel>Barcode</IonLabel>
+                </IonTabButton>
                 <IonTabButton tab="location" href="/app/location">
-                <IonIcon icon={map} />
-                <IonLabel>Geolocation</IonLabel>
+                    <IonIcon icon={map} />
+                    <IonLabel>Geolocation</IonLabel>
                 </IonTabButton>
                 <IonTabButton tab="gallery" href="/app/gallery">
-                <IonIcon icon={images} />
-                <IonLabel>Photos</IonLabel> 
+                    <IonIcon icon={images} />
+                    <IonLabel>Photos</IonLabel> 
                 </IonTabButton>
                 <IonTabButton tab="profile" href="/app/profile">
-                <IonIcon icon={person} />
-                <IonLabel>Profile</IonLabel>
+                    <IonIcon icon={person} />
+                    <IonLabel>Profile</IonLabel>
                 </IonTabButton>
             </IonTabBar>
         </IonTabs>
