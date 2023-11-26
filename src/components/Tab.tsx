@@ -1,4 +1,4 @@
-import { Route } from 'react-router';
+import { Redirect, Route } from 'react-router';
 
 import { 
 	IonTabs, IonTabBar, IonTabButton, IonIcon, 
@@ -20,6 +20,9 @@ const Tab: React.FC = ({ pagesConfigData, page }) => {
 				))}
 			</IonTabBar>
 			<IonRouterOutlet>
+				<Route exact path="/app/task">
+					<Redirect to="/app/order" />
+				</Route>
 				{pageTabsData.map((tabData, index) => (
 					<Route path={tabData.url} component={tabData.Component} key={index} />
 				))}
