@@ -35,7 +35,7 @@ const App: React.FC = () => (
   <IonApp>
     <AuthProvider>
       <IonReactRouter>
-          <IonRouterOutlet>
+          <IonRouterOutlet id="root">
               <Route exact path="/login" component={LoginPage} />
               <Route exact path="/" render={() => <Redirect to="/app" />}/>
               <PrivateRoute path="/app" component={AppPage} />

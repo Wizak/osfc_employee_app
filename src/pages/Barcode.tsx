@@ -6,10 +6,12 @@ import {
 } from '@ionic/react';
 import { close } from 'ionicons/icons';
 
+import Page from '../components/Page';
+
 import './Barcode.css'; 
 
 
-const BarCodeContent: React.FC = () => {
+export const BarcodeContent: React.FC = () => {
 	const [barcode, setBarcode] = useState('');
 	const [barcods, setBarcods] = useState(JSON.parse(window.localStorage.getItem("barcode")) || []);
 
@@ -70,4 +72,6 @@ const BarCodeContent: React.FC = () => {
 };
 
 
-export default BarCodeContent;
+const BarcodePage = (props) => <Page title="Barcode" component={<BarcodeContent {...props} />} />;
+
+export default BarcodePage;

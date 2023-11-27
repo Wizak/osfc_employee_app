@@ -11,11 +11,11 @@ import LogoutButton from './LogoutButton';
 import './AppMenu.css';
 
 
-const Menu: React.FC = ({ pagesConfigData }) => {
+const Menu: React.FC = ({ appMenuConfig }) => {
     const location = useLocation();
     const { getPermissions } = useAuth();
     const permissions = getPermissions();
-    const pagesList = Object.values(pagesConfigData);
+    const pagesList = Object.values(appMenuConfig);
 
     return (
         <IonMenu contentId="main" type="overlay">

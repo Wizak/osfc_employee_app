@@ -10,9 +10,10 @@ import { randomChoiceElements } from '../helpers/getRandomChoice';
 import { initialFakeDocumentsData, fakeDocumentsData } from '../helpers/fakeData';
 
 import DocumentPreviewModal from '../components/DocumentPreviewModal';
+import Page from '../components/Page';
 
 
-export const DocumentsComponent = () => {
+export const DocumentsContent = () => {
 	const [documents, setDocuments] = React.useState(initialFakeDocumentsData);
 	const [document, setDocument] = React.useState({});
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -68,28 +69,6 @@ export const DocumentsComponent = () => {
 };
 
 
-const Documents: React.FC = () => {
-	return (
-		<IonPage>
-			<IonHeader>
-				<IonToolbar>
-					<IonButtons slot="start">
-						<IonMenuButton />
-					</IonButtons>
-					<IonTitle>Documents</IonTitle>
-				</IonToolbar>
-			</IonHeader>
-			<IonContent fullscreen>
-				<IonHeader collapse="condense">
-					<IonToolbar>
-						<IonTitle size="large">Documents</IonTitle>
-					</IonToolbar>
-				</IonHeader>
-				<DocumentsComponent />
-			</IonContent>
-		</IonPage>
-	);
-};
+const DocumentsPage = (props) => <Page title="Documents" component={<DocumentsContent {...props} />} />;
 
-
-export default Documents;
+export default DocumentsPage;

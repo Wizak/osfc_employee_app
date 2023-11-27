@@ -7,9 +7,10 @@ import {
 import { camera, trash, close } from 'ionicons/icons';
 
 import { usePhotoGallery, UserPhoto } from '../hooks/usePhotoGallery';
+import Page from '../components/Page';
 
 
-const Gallery: React.FC = () => {
+export const GalleryContent: React.FC = () => {
 	const { photos, takePhoto, deletePhoto } = usePhotoGallery();
 	const [ photoToDelete, setPhotoToDelete ] = useState<UserPhoto>();
 
@@ -56,4 +57,6 @@ const Gallery: React.FC = () => {
 };
 
 
-export default Gallery;
+const GalleryPage = (props) => <Page title="Gallery" component={<GalleryContent {...props} />} />;
+
+export default GalleryPage;

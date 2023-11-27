@@ -4,10 +4,11 @@ import { useAuth } from '../context/AuthContext';
 import { logInOutline } from 'ionicons/icons';
 import OSFCLOGO from '../assets/osfc-logo.jpg';
 import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router';
 
 const LoginPage: React.FC = () => {
   const { login } = useAuth();
-  const router = useIonRouter();
+  const history = useHistory();
   const [present, dismiss] = useIonLoading();
   const { register, handleSubmit, formState: { errors } } = useForm();
 
@@ -28,7 +29,8 @@ const LoginPage: React.FC = () => {
         present('Logging in...');
         setTimeout(async () => {
           dismiss();
-          router.push('/app', 'root');
+          history.push('/app');
+          window.location.reload();
         }, 2000);
       } else {
         present(res.message);

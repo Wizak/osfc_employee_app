@@ -10,8 +10,10 @@ import { locate } from 'ionicons/icons';
 import { Geolocation } from '@capacitor/geolocation';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
+import Page from '../components/Page';
 
-const GeolocationTracking: React.FC = () => {
+
+export const GeolocationTrackingContent: React.FC = () => {
 	const [location, setLocation] = useState(null);
 	const [address, setAddress] = useState<string>('');
 
@@ -109,4 +111,6 @@ const GeolocationTracking: React.FC = () => {
 };
 
 
-export default GeolocationTracking;
+const GeolocationTrackingPage = (props) => <Page title="GeolocationTracking" component={<GeolocationTrackingContent {...props} />} />;
+
+export default GeolocationTrackingPage;

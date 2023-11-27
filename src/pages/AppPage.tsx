@@ -2,66 +2,42 @@ import React from 'react';
 import { Route, Redirect } from 'react-router';
 
 import { IonSplitPane, IonPage, IonRouterOutlet } from '@ionic/react';
-import { qrCode, list, map, person, images, apps, document } from 'ionicons/icons';
+import { qrCode, list, map, person, images} from 'ionicons/icons';
 
-// import Tab from '../components/Tab';
-import Page from '../components/Page';
 import AppMenu from '../components/AppMenu';
 
+import Task from './Task';
 import Barcode from './Barcode';
 import Geolocation from './Geolocation';
 import Photos from './Photos';
 import Profile from './Profile';
-import Order, { OrderComponent } from './Order';
-// import Documents from './Documents';
 
 
-export const pagesConfigData = {
+export const appMenuConfig = {
     "profile": { 
         "title": 'Profile', 
         "url": '/app/profile', 
         "icon": person, 
-        "Component": Profile,
     },
-    "order": { 
+    "task": { 
         "title": 'Task', 
-        "url": '/app/order', 
+        "url": '/app/task', 
         "icon": list, 
-        "Component": OrderComponent, 
-        // "tabs": [ 
-        //     { 
-        //         "name": 'order', 
-        //         "title": 'Order',
-        //         "url": '/app/order', 
-        //         "icon": apps, 
-        //         "Component": Order,
-        //     },
-        //     { 
-        //         "name": 'documents', 
-        //         "title": 'Documents', 
-        //         "url": '/app/documents', 
-        //         "icon": document, 
-        //         "Component": Documents,
-        //     },
-        // ],
     },
     "photos": { 
         "title": 'Photos', 
         "url": '/app/photos', 
         "icon": images, 
-        "Component": Photos,
     },
     "geolocation": { 
         "title": 'Geolocation', 
         "url": '/app/geolocation', 
         "icon": map, 
-        "Component": Geolocation,
     },
     "barcode": { 
         "title": 'Barcode', 
         "url": '/app/barcode', 
         "icon": qrCode, 
-        "Component": Barcode,
     },
 };
 
@@ -69,14 +45,16 @@ export const pagesConfigData = {
 const Menu: React.FC = () => (
     <IonPage>
         <IonSplitPane contentId="main">
-            <AppMenu pagesConfigData={pagesConfigData} />
+            <AppMenu appMenuConfig={appMenuConfig} />
             <IonRouterOutlet id="main">
                 <Route exact path="/app">
                     <Redirect to="/app/profile" />
                 </Route>
-                <Route path="/app/:page">
-                    <Page pagesConfigData={pagesConfigData} />
-                </Route>
+                <Route exact path="/app/profile" component={Profile}/>
+                <Route exact path="/app/photos" component={Photos} />
+                <Route exact path="/app/geolocation" component={Geolocation} />
+                <Route exact path="/app/barcode" component={Barcode} />
+                <Route path="/app/task" component={Task} />
             </IonRouterOutlet>
         </IonSplitPane>
     </IonPage>

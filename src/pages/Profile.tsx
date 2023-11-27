@@ -3,9 +3,10 @@ import React from 'react';
 import { IonRow, IonGrid, IonLabel } from '@ionic/react';
 
 import { useAuth } from '../context/AuthContext';
+import Page from '../components/Page';
 
 
-const Profile: React.FC = () => {
+export const ProfileContent: React.FC = () => {
 	const { getPermissions } = useAuth();
 	const permissions = getPermissions();
 
@@ -28,4 +29,6 @@ const Profile: React.FC = () => {
 };
 
 
-export default Profile;
+const ProfilePage = (props) => <Page title="Profile" component={<ProfileContent {...props} />} />;
+
+export default ProfilePage;
