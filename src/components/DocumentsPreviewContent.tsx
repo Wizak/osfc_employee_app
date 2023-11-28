@@ -50,7 +50,7 @@ export const TabletDocumentsPreview = ({ documents }) => (
 	<Swiper loop>
 		{documents.map((doc, index) => (
 			<SwiperSlide key={index}>
-				<div style={{ height: "100vh", width: "80%", marginTop: "70px" }}>
+				<div style={{ width: "80%", marginTop: "30px" }}>
 					<DoumentsPreviewBlock document={doc} />
 				</div>
 			</SwiperSlide>

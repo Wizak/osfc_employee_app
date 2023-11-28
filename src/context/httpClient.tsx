@@ -94,4 +94,4 @@ export const httpClient = (url, options = {}) => {
 	return fetchJson(API_URL+url, _options);
 }
 
-const API_URL = 'http://93.171.247.14/'
+export const API_URL = 'http://93.171.247.14/'

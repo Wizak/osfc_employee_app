@@ -4,10 +4,13 @@ import {
 	IonToolbar, IonModal, IonButton,
 } from '@ionic/react';
 
+import PDFViewer from '../services/PDFViewer';
+
 
 export const DoumentsPreviewBlock = ({ document }) => (
 	document.type === "pdf" ? 
-		<iframe src={document.path} width="100%" style={{ height: "80vh"}}/>
+		<PDFViewer src={document.path} docProps={{ style: { overflowY: "scroll", height: "80vh" } }} />
+		// <iframe src={document.path} width="100%" style={{ height: "80vh"}}/>
 	:
 		<img src={document.path} />
 );
