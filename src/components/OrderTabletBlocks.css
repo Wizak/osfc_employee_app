@@ -1,0 +1,40 @@
+.container {
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background: #00000056;
+    height: '100%';
+}
+  
+.label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    text-align: center;
+}
+
+.container .title {
+    color: #af8f8f;
+    padding: 20px 0px 20px;
+    text-shadow: 1px 1px 3px rgba(162, 111, 204, 0.5);
+}
+
+.delimiter {
+    display: block;
+    border-bottom: 3px solid #ccc;
+    margin: 10px 0 0;
+    box-shadow: 0 0 20px rgba(153, 139, 139, 1);
+}
+
+  
+.inputContainer {
+    margin-bottom: 16px;
+    color: #ccc;
+    border: 1px solid #ccc;
+    background: #6b6a6a56;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+  

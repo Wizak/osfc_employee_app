@@ -5,6 +5,14 @@ import {
 } from '@ionic/react';
 
 
+export const DoumentsPreviewBlock = ({ document }) => (
+	document.type === "pdf" ? 
+		<iframe src={document.path} width="100%" style={{ height: "80vh"}}/>
+	:
+		<img src={document.path} />
+);
+
+
 const DocumentPreviewModal: React.FC<any> = ({ isOpen, closeModal, document }) => (
 	<IonModal isOpen={isOpen} onIonModalWillDismiss={closeModal}>
 		<IonHeader>
@@ -13,11 +21,7 @@ const DocumentPreviewModal: React.FC<any> = ({ isOpen, closeModal, document }) =
 			</IonToolbar>
 		</IonHeader>
 		<IonContent className="ion-padding">
-			{document.type === "pdf" ? 
-				<iframe src={document.path} width="100%" height="80%"/>
-			:
-				<img src={document.path} width="100%" height="80%" />
-			}
+			<DoumentsPreviewBlock document={document} />
 			<IonButton expand="full" onClick={closeModal}>Close</IonButton>
 		</IonContent>
 	</IonModal>
