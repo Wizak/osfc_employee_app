@@ -5,8 +5,19 @@ const config: CapacitorConfig = {
   appName: 'OSFC Employee APP (DEMO)',
   webDir: 'dist',
   server: {
-    androidScheme: 'http'
+    androidScheme: 'http',
   },
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+  },
+  android: {
+    buildOptions: {
+        keystorePath: 'c:\Users\Wizaker\Desktop\key-store.jks',
+        keystoreAlias: 'osfc',
+    }
+  }
 };
 
 export default config;

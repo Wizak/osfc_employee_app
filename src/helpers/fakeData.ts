@@ -1,17 +1,17 @@
-import { makeServerUrl } from './getDocUrl';
+import { makeLocalUrl } from './getDocUrl';
 
 
 export const fakeDocumentsData = [
-	{ id: 1, name: 'Other', type: "pdf", path: makeServerUrl("85e88061-de7a-474b-afa9-c51a191516ba.pdf") },
-	{ id: 2, name: 'OSFC plukk list', type: "pdf", path: makeServerUrl("dc05b7de-953e-40f8-afb8-02126d21a066.pdf") },
-	{ id: 3, name: 'SAD', type: "pdf", path: makeServerUrl("fbcb103c-0a05-4013-9428-8559bc5e28a6.pdf") },
-	{ id: 4, name: 'Label', type: "pdf", path: makeServerUrl("a2788c9a-9702-4173-849d-9cc2fd2038de.pdf") },
-	{ id: 5, name: 'Deviation report', type: "image", path: makeServerUrl("cd20dd46-78fa-4251-9d86-d5587e6eea8b.jpg") },
-	{ id: 6, name: 'Off loading chart', type: "image", path: makeServerUrl("132dbb21-fcf4-4fe4-ab93-c7a3dc562437.jpeg") },
-	{ id: 7, name: 'MIO', type: "image", path: makeServerUrl("d21e4b5f-6bd4-4966-9ffc-5d0d2540e95f.jpg") },
-	{ id: 8, name: 'Invoice', type: "image", path: makeServerUrl("20e3dae3-2ee0-4efe-8022-f8626ffa21b4.jpg") },
-	{ id: 9, name: 'Export documents', type: "pdf", path: makeServerUrl("0ebd3254-a36a-414f-aa5a-c462f2ec9ca4.pdf") },
-	{ id: 10, name: 'CMR', type: "image", path: makeServerUrl("966df934-b002-4d14-b810-5a8297298efe.jpg") },
+	{ id: 1, name: 'Other', type: "pdf", path: makeLocalUrl("/6f90e723-1dd0-4415-9536-ad16f312aa03.pdf") },
+	{ id: 2, name: 'OSFC plukk list', type: "pdf", path: makeLocalUrl("/3bb7a5a2-ad5e-4445-8f78-4c12253f2d09.pdf") },
+	{ id: 3, name: 'SAD', type: "pdf", path: makeLocalUrl("/3bb7a5a2-ad5e-4445-8f78-4c12253f2d09.pdf") },
+	{ id: 4, name: 'Label', type: "pdf", path: makeLocalUrl("/6f90e723-1dd0-4415-9536-ad16f312aa03.pdf") },
+	{ id: 5, name: 'Deviation report', type: "image", path: makeLocalUrl("/bb5a3d67-ff85-4ca6-96c9-a3e711341540.png") },
+	{ id: 6, name: 'Off loading chart', type: "image", path: makeLocalUrl("/bb5a3d67-ff85-4ca6-96c9-a3e711341540.png") },
+	{ id: 7, name: 'MIO', type: "image", path: makeLocalUrl("/bb5a3d67-ff85-4ca6-96c9-a3e711341540.png") },
+	{ id: 8, name: 'Invoice', type: "image", path: makeLocalUrl("/d34033be-8ef9-41d4-b64b-5ad0c451fce3.png") },
+	{ id: 9, name: 'Export documents', type: "pdf", path: makeLocalUrl("/a1231723-1dd0-4415-9536-ad16f312aa03.pdf") },
+	{ id: 10, name: 'CMR', type: "pdf", path: makeLocalUrl("/a1231723-1dd0-4415-9536-ad16f312aa03.pdf") },
 ];
 
 export const initialFakeDocumentsData = fakeDocumentsData.slice(2);

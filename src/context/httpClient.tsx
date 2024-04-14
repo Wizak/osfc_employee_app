@@ -1,10 +1,10 @@
-import React from "react";
+import { CapacitorHttp } from '@capacitor/core';
 
 class HttpError extends Error {
     constructor(
         public readonly message,
         public readonly status,
-        public readonly body = null
+        public readonly data = null
     ) {
         super(message);
         Object.setPrototypeOf(this, HttpError.prototype);
@@ -16,82 +16,40 @@ class HttpError extends Error {
         }
         this.stack = new Error().stack;
     }
-}
-
-export default HttpError;
-
-
-export interface Options extends RequestInit {
-    user?: {
-        authenticated?: boolean;
-        token?: string;
-    };
-}
-
-export const createHeadersFromOptions = (options: Options): Headers => {
-    const requestHeaders = (options.headers ||
-        new Headers({
-            Accept: 'application/json',
-        })) as Headers;
-    if (
-        !requestHeaders.has('Content-Type') &&
-        !(options && (!options.method || options.method === 'GET')) &&
-        !(options && options.body && options.body instanceof FormData)
-    ) {
-        requestHeaders.set('Content-Type', 'application/json');
-    }
-    if (options.user && options.user.authenticated && options.user.token) {
-        requestHeaders.set('Authorization', options.user.token);
-    }
-
-    return requestHeaders;
 };
 
-export const fetchJson = (url, options: Options = {}) => {
-    const requestHeaders = createHeadersFromOptions(options);
-
-    return fetch(url, { ...options, headers: requestHeaders })
-        .then(response =>
-            response.text().then(text => ({
-                status: response.status,
-                statusText: response.statusText,
-                headers: response.headers,
-                body: text,
-            }))
-        )
-        .then(({ status, statusText, headers, body }) => {
-            let json;
-            try {
-                json = JSON.parse(body);
-            } catch (e) {
-                // not json, no big deal
-            }
+const fetchJson = async (options = {}) => {
+    return await CapacitorHttp
+        .request(options)
+        .then(({ data, url, status, headers }) => {
             if (status < 200 || status >= 300) {
                 return Promise.reject(
-                    new HttpError(
-                        (json && json.message) || statusText,
-                        status,
-                        json
-                    )
+                    new HttpError(data?.message, status, data)
                 );
             }
-            return Promise.resolve({ status, headers, body, json });
+            return Promise.resolve({ status, headers, data });
         });
 };
 
 
-const getOptions = (options = {}) => {
-	if (!options.headers) {
-		options.headers = new Headers({ Accept: 'application/json' });
-	}
-	const token = localStorage.getItem('token');
-	options.headers.set('Authorization', `Bearer ${token}`);
-	return options;
-}
+const getOptions = ({ headers = {}, url = '/', ...restOptions }) => ({ 
+    ...restOptions,
+    url: `${API_URL}${url}`,
+    headers: {
+        ...headers,
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    },
+});
 
-export const httpClient = (url, options = {}) => {
+
+export const httpClient = (options = {}) => {
 	const _options = getOptions(options);
-	return fetchJson(API_URL+url, _options);
-}
+	return fetchJson(_options);
+};
 
-export const API_URL = 'http://93.171.247.14/'
+export const API_DOMAIN = '93.171.247.14';
+export const API_PROTOCOL = 'http';
+export const API_PORT = '80';
+export const API_URL = `${API_PROTOCOL}://${API_DOMAIN}:${API_PORT}`;

@@ -1,6 +1,4 @@
-// src/context/AuthContext.tsx
-
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode } from 'react';
 import { httpClient } from './httpClient';
 
 
@@ -21,15 +19,16 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<ReactNode> = ({ children }) => {
   const login = (email: string, password: string) => {
-    return httpClient("login", {
+    return httpClient({
         method: 'POST',
-        body: JSON.stringify({email: email, password: password}),
+        url: '/login',
+        data: JSON.stringify({email: email, password: password}),
     }).then(res => {
-      localStorage.setItem("token", res.json.token);
-      localStorage.setItem("permissions", JSON.stringify(res.json.permissions));
-      return {success: true, message: "OK"};
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("permissions", JSON.stringify(res.data.permissions));
+      return { success: true, message: "OK" };
     }).catch(res => {
-      return {success: false, message: res.message};
+      return { success: false, message: res.message };
     });
   };
 
