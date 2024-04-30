@@ -49,7 +49,7 @@ export const httpClient = (options = {}) => {
 	return fetchJson(_options);
 };
 
-export const API_DOMAIN = '93.171.247.14';
+export const API_DOMAIN = 'osfc-test.userlogin.eu';
 export const API_PROTOCOL = 'http';
-export const API_PORT = '80';
+export const API_PORT = '8000';
 export const API_URL = `${API_PROTOCOL}://${API_DOMAIN}:${API_PORT}`;
